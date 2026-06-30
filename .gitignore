@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv
+env/
+venv/
+
+# Editor
+.vscode/
+.idea/
+
+# Byte-compiled / optimized
+*.pyc
+*.pyo
+
+# Distribution
+dist/
+build/
+
+# Tests
+.pytest_cache/
