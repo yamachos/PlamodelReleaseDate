@@ -21,3 +21,4 @@ build/
 
 # Tests
 .pytest_cache/
+PlamodelReleaseDate/resource/credential.json
