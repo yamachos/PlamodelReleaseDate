@@ -3,7 +3,7 @@ sys.path.append('..')
 
 from model.Okichan import Model
 from view.MainWindow import View 
-from resource.settings import calendars
+from res.settings import calendars
 
 class Controller:
     def __init__(self, model: Model, view: View):

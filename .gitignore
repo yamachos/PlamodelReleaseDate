@@ -24,3 +24,11 @@ build/
 PlamodelReleaseDate/resource/credential.json
 /PlamodelReleaseDate/cache
 /PlamodelReleaseDate/resource/settings.py
+/PlamodelReleaseDate/driver
+PlamodelReleaseDate/res/settings.py
+PlamodelReleaseDate/res/settings - コピー.py
+tests/test_core.py
+PlamodelReleaseDate/res/credential.json
+tests/test_core.py
+PlamodelReleaseDate/__main__.py.bak
+PlamodelReleaseDate/__main__.spec
