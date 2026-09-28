@@ -41,6 +41,7 @@ class Kounoudo(ModelBase):
                 # print( driver_path )
                 service = webdriver.ChromeService(executable_path=driver_path)
                 self.driver = webdriver.Chrome(service=service, options=options)
+            self.driver.get("https://google.com")
             # position = self.driver.get_window_position()
             # size = self.driver.get_window_size()
             # print(
@@ -92,9 +93,9 @@ class Kounoudo(ModelBase):
             )
 
     def button_click(self, button):
-        ActionChains(self.driver).scroll_to_element(button).perform()
-        ActionChains(self.driver).move_to_element(button).perform()
-        time.sleep(0.1)
+        # ActionChains(self.driver).scroll_to_element(button).perform()
+        # ActionChains(self.driver).move_to_element(button).perform()
+        # time.sleep(0.1)
         # ボタンがTOPメニューに重なってTOPメニューをクリックしてしまいエラーを出すことがあったのでJavascript側でクリックするように変更
         # button[0].click()
         self.driver.execute_script("arguments[0].click();", button)
@@ -143,7 +144,7 @@ class Kounoudo(ModelBase):
                 if len(button) == 0:
                     continue
                 if button[0].get_attribute("className").find("is-active") == -1:
-                    self.button_click(button)
+                    self.button_click(button[0])
 
                 WebDriverWait(self.driver, 10).until(
                     EC.presence_of_all_elements_located((By.ID, "js-calendar-main"))
