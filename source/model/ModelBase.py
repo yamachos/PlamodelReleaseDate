@@ -42,10 +42,7 @@ class ModelBase(metaclass=ABCMeta):
                 self.driver.get("https://google.com")
             else:
                 driver_path = (
-                    Project.get_project_path()
-                    / "source"
-                    / "chromedriver-linux64"
-                    / "chromedriver"
+                    Project.get_project_path() / "chromedriver-linux64" / "chromedriver"
                 )
                 # print( driver_path )
                 service = webdriver.ChromeService(executable_path=driver_path)
