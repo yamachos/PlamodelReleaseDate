@@ -29,7 +29,7 @@ class Kounoudo(ModelBase):
         self.compiled_break_strs = []
 
     def close(self):
-        super.close()
+        super().close()
 
     # 指定した年と月からURLを生成する
     def get_url(self) -> str:

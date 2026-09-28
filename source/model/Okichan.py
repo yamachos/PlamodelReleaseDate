@@ -86,7 +86,7 @@ class Okichan(ModelBase):
             self.compiled_break_strs.append(re.compile(break_str))
 
     def close(self):
-        super.close()
+        super().close()
 
     # 製品名からブランド名を取得する
     def get_brandname(self, name: str) -> str:
