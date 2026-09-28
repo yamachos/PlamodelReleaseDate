@@ -4,8 +4,8 @@ import sys
 
 def get_project_path() -> Path:
     result = Path.cwd()
-    if sys.platform == "win32":
-        result = result / "source"
+    # if sys.platform == "win32":
+    result = result / "source"
     return result
 
 
