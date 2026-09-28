@@ -1,4 +1,4 @@
-from PlamodelReleaseDate.core import get_release_date
+from source.core import get_release_date
 
 
 def test_get_release_date():
