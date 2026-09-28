@@ -1,5 +1,6 @@
 # python
 import os
+import sys
 import requests
 from datetime import date, datetime, timezone, timedelta
 import json
@@ -10,6 +11,11 @@ from abc import ABCMeta, abstractmethod
 from typing import final
 
 #
+# 3rdparty
+from selenium import webdriver
+from selenium.common.exceptions import (
+    WebDriverException,
+)
 from model.GoogleCalendar import GoogleCalendar
 
 #
@@ -26,6 +32,38 @@ class ModelBase(metaclass=ABCMeta):
     def __init__(self, now: datetime):
         self.date = now
         self.calendar = GoogleCalendar()
+        try:
+            options = webdriver.ChromeOptions()
+            options.add_argument("--headless")
+            options.add_argument("--disable-popup-blocking")
+            options.add_argument("--disable-infobars")
+            if sys.platform == "win32":
+                self.driver = webdriver.Chrome(options=options)
+                self.driver.get("https://google.com")
+            else:
+                driver_path = (
+                    Project.get_project_path() / "chromedriver-linux64" / "chromedriver"
+                )
+                # print( driver_path )
+                service = webdriver.ChromeService(executable_path=driver_path)
+                self.driver = webdriver.Chrome(service=service, options=options)
+            # position = self.driver.get_window_position()
+            # size = self.driver.get_window_size()
+            # print(
+            #    "Window position: x = {}, y = {}. Size: width = {}, height = {}".format(
+            #        position['x'], position['y'], size['width'], size['height']
+            #    )
+            # )
+
+        except WebDriverException:
+            print(
+                "WebDriverの通信エラーが発生しました。インターネット接続を確認してください。"
+            )
+
+    def close(self):
+        if self.driver:
+            self.driver.quit()
+            self.driver = None
 
     #
     @final

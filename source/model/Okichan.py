@@ -84,40 +84,9 @@ class Okichan(ModelBase):
         self.compiled_break_strs = []
         for break_str in self.BREAK_PRODUCT_LIST_STRINGS:
             self.compiled_break_strs.append(re.compile(break_str))
-        try:
-            options = webdriver.ChromeOptions()
-            options.add_argument("--headless")
-            options.add_argument("--disable-popup-blocking")
-            options.add_argument("--disable-infobars")
-            if sys.platform == "win32":
-                self.driver = webdriver.Chrome(options=options)
-            else:
-                driver_path = (
-                    Project.get_project_path() / "chromedriver" / "chromedriver"
-                )
-                # print( driver_path )
-                service = webdriver.ChromeService(executable_path=driver_path)
-                self.driver = webdriver.Chrome(service=service, options=options)
-
-            self.driver.get("https://google.com")
-            # position = self.driver.get_window_position()
-            # size = self.driver.get_window_size()
-            # print(
-            #    "Window position: x = {}, y = {}. Size: width = {}, height = {}".format(
-            #        position['x'], position['y'], size['width'], size['height']
-            #    )
-            # )
-
-        except WebDriverException:
-            traceback.print_exc()
-            print(
-                "WebDriverの通信エラーが発生しました。インターネット接続を確認してください。"
-            )
 
     def close(self):
-        if self.driver:
-            self.driver.quit()
-            self.driver = None
+        super.close(self)
 
     # 製品名からブランド名を取得する
     def get_brandname(self, name: str) -> str:

@@ -27,38 +27,9 @@ class Kounoudo(ModelBase):
     def __init__(self, now: datetime):
         super().__init__(now)
         self.compiled_break_strs = []
-        try:
-            options = webdriver.ChromeOptions()
-            options.add_argument("--headless")
-            options.add_argument("--disable-popup-blocking")
-            options.add_argument("--disable-infobars")
-            if sys.platform == "win32":
-                self.driver = webdriver.Chrome(options=options)
-            else:
-                driver_path = (
-                    Project.get_project_path() / "chromedriver" / "chromedriver"
-                )
-                # print( driver_path )
-                service = webdriver.ChromeService(executable_path=driver_path)
-                self.driver = webdriver.Chrome(service=service, options=options)
-            self.driver.get("https://google.com")
-            # position = self.driver.get_window_position()
-            # size = self.driver.get_window_size()
-            # print(
-            #    "Window position: x = {}, y = {}. Size: width = {}, height = {}".format(
-            #        position['x'], position['y'], size['width'], size['height']
-            #    )
-            # )
-
-        except WebDriverException:
-            print(
-                "WebDriverの通信エラーが発生しました。インターネット接続を確認してください。"
-            )
 
     def close(self):
-        if self.driver:
-            self.driver.quit()
-            self.driver = None
+        super.close(self)
 
     # 指定した年と月からURLを生成する
     def get_url(self) -> str:
