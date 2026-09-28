@@ -34,6 +34,13 @@ class Kounoudo(ModelBase):
             options.add_argument("--disable-infobars")
             if sys.platform == "win32":
                 self.driver = webdriver.Chrome(options=options)
+                position = self.driver.get_window_position()
+                size = self.driver.get_window_size()
+                print(
+                    "Window position: x = {}, y = {}. Size: width = {}, height = {}".format(
+                        position["x"], position["y"], size["width"], size["height"]
+                    )
+                )
             else:
                 driver_path = (
                     Project.get_project_path() / "chromedriver" / "chromedriver"
@@ -41,6 +48,13 @@ class Kounoudo(ModelBase):
                 # print( driver_path )
                 service = webdriver.ChromeService(executable_path=driver_path)
                 self.driver = webdriver.Chrome(service=service, options=options)
+            # position = self.driver.get_window_position()
+            # size = self.driver.get_window_size()
+            # print(
+            #    "Window position: x = {}, y = {}. Size: width = {}, height = {}".format(
+            #        position['x'], position['y'], size['width'], size['height']
+            #    )
+            # )
 
         except WebDriverException:
             print(
@@ -71,12 +85,27 @@ class Kounoudo(ModelBase):
                     var element = document.getElementById('google-anno-sa');
                     if (element) element.remove();
                 """)
+                # TOPメニューを削除しようとした形式（上手く行かなかったが一応残している）
+                # self.driver.execute_script("""
+                #    var element = document.getElementsByClassName('mobile-header-menu-buttons mobile-menu-buttons has-logo>
+                #    if (element) element.remove();
+                # """)
+
             except TimeoutException:
                 print("条件を満たせませんでした")
         except WebDriverException:
             print.error(
                 "WebDriverの通信エラーが発生しました。インターネット接続を確認してください。"
             )
+
+    def button_click(self, button):
+        ActionChains(self.driver).scroll_to_element(button).perform()
+        ActionChains(self.driver).move_to_element(button).perform()
+        time.sleep(0.1)
+        # ボタンがTOPメニューに重なってTOPメニューをクリックしてしまいエラーを出すことがあったのでJavascript側でクリックするように変更
+        # button[0].click()
+        self.driver.execute_script("arguments[0].click();", button)
+        time.sleep(0.1)
 
     # 製品リストを取得する
     def get_product_list(self, filters: List[str]):
@@ -96,11 +125,7 @@ class Kounoudo(ModelBase):
                 len(button) > 0
                 and button[0].get_attribute("className").find("is-active") == -1
             ):
-                ActionChains(self.driver).scroll_to_element(button[0]).perform()
-                ActionChains(self.driver).move_to_element(button[0]).perform()
-                time.sleep(1)
-                button[0].click()
-                time.sleep(1)
+                self.button_click(button[0])
 
             # カテゴリを全部表示
             toggle = self.driver.find_element(
@@ -109,7 +134,7 @@ class Kounoudo(ModelBase):
             )
             if toggle.text == "もっと見る":
                 toggle.click()
-                time.sleep(1)
+                time.sleep(0.1)
 
             # カテゴリをクリック
             for filter in filters:
@@ -122,15 +147,10 @@ class Kounoudo(ModelBase):
                 # print( button[0].text )
                 # print( button[0].get_attribute( 'className' ) )
 
-                if (
-                    len(button) > 0
-                    and button[0].get_attribute("className").find("is-active") == -1
-                ):
-                    ActionChains(self.driver).scroll_to_element(button[0]).perform()
-                    ActionChains(self.driver).move_to_element(button[0]).perform()
-                    time.sleep(1)
-                    button[0].click()
-                    time.sleep(1)
+                if len(button) == 0:
+                    continue
+                if button[0].get_attribute("className").find("is-active") == -1:
+                    self.button_click(button)
 
                 WebDriverWait(self.driver, 10).until(
                     EC.presence_of_all_elements_located((By.ID, "js-calendar-main"))
