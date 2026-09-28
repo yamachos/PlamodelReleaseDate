@@ -34,13 +34,6 @@ class Kounoudo(ModelBase):
             options.add_argument("--disable-infobars")
             if sys.platform == "win32":
                 self.driver = webdriver.Chrome(options=options)
-                position = self.driver.get_window_position()
-                size = self.driver.get_window_size()
-                print(
-                    "Window position: x = {}, y = {}. Size: width = {}, height = {}".format(
-                        position["x"], position["y"], size["width"], size["height"]
-                    )
-                )
             else:
                 driver_path = (
                     Project.get_project_path() / "chromedriver" / "chromedriver"
