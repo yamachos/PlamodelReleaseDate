@@ -55,9 +55,11 @@ class ModelBase(metaclass=ABCMeta):
             #    )
             # )
 
-        except WebDriverException:
+        except WebDriverException as e:
             print(
-                "WebDriverの通信エラーが発生しました。インターネット接続を確認してください。"
+                "WebDriverの通信エラーが発生しました。インターネット接続を確認してください。\nエラー内容: {}".format(
+                    e
+                )
             )
 
     def close(self):
