@@ -26,13 +26,13 @@ calendars = [
     CalendarSetting(
         title="30MS/MP",
         used_class=Model.OKICHAN,
-        filters=["30MS", "30 MINUTES SISTERS", "30MP", "30 MINUTES PREFERENCE"],
+        filters=["30MS", "30MP"],
         url="a26172608d3612eeeb7d862b1323ab7d10d2291bb3a586234a1ce8110e0b81eb@group.calendar.google.com",
     ),
     CalendarSetting(
         title="30MM/MF",
         used_class=Model.OKICHAN,
-        filters=["30MM", "30 MINUTES MISSIONS", "30MF", "30 MINUTES FANTASY"],
+        filters=["30MM", "30MF"],
         url="dbc30c769fa3bf4fa73c7eb951c8e12f4a2185374f9a25198d16b36e2971a290@group.calendar.google.com",
     ),
     CalendarSetting(

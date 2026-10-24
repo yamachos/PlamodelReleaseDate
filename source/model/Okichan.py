@@ -38,7 +38,7 @@ class Okichan(ModelBase):
         "RE/100": "RE/100",
         "FULL MECHANICS": "FM",
         "FM": "FM",
-        "30 MINUTES MISSONS": "30MM",
+        "30 MINUTES MISSIONS": "30MM",
         "30MM": "30MM",
         "30 MINUTES SISTERS": "30MS",
         "30MS": "30MS",
